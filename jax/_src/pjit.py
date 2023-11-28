@@ -401,8 +401,7 @@ def common_infer_params(pjit_info_args, *args, **kwargs):
 
   if (kwargs and user_in_shardings is not None and
       not is_unspecified(user_in_shardings)):
-    raise ValueError(
-        "pjit does not support kwargs when in_shardings is specified.")
+    raise ValueError( "pjit does not support kwargs when in_shardings is specified.")
 
   if resource_env is not None:
     pjit_mesh = resource_env.physical_mesh
@@ -466,6 +465,8 @@ def common_infer_params(pjit_info_args, *args, **kwargs):
 
   assert in_shardings is not None or all(i is not None for i in in_shardings)
   assert out_shardings is not None or all(o is not None for o in out_shardings)
+
+  print( f"JAX DEBUG: explicit_args = {explicit_args}, static_argnames={static_argnames}, kwargs={kwargs}")
 
   if config.dynamic_shapes.value:
     in_type = pe.infer_lambda_input_type(axes_specs, explicit_args)
